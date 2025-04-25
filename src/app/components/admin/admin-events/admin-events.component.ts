@@ -79,11 +79,15 @@ export class AdminEventsComponent implements OnInit {
       return;
     }
 
+    // Format dates properly for the backend
+    const formattedDateDebut = this.formatDateForBackend(this.eventForm.value.dateDebut);
+    const formattedDateFin = this.formatDateForBackend(this.eventForm.value.dateFin);
+
     const eventData: Evenement = {
       nom: this.eventForm.value.nom,
       description: this.eventForm.value.description,
-      dateDebut: this.eventForm.value.dateDebut,
-      dateFin: this.eventForm.value.dateFin,
+      dateDebut: formattedDateDebut,
+      dateFin: formattedDateFin,
       capaciteMax: this.eventForm.value.capaciteMax
     };
 
@@ -110,6 +114,17 @@ export class AdminEventsComponent implements OnInit {
         }
       );
     }
+  }
+
+  // Add this new method to format dates properly for the backend
+  formatDateForBackend(dateString: string): string {
+    if (!dateString) return '';
+    // Create a date object from the input date string
+    const date = new Date(dateString);
+    // Set the time to noon to avoid timezone issues
+    date.setHours(12, 0, 0, 0);
+    // Return the date in ISO format
+    return date.toISOString();
   }
 
   editEvent(event: any): void {

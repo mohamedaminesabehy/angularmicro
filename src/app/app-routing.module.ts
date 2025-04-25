@@ -12,6 +12,7 @@ import { AdminEventsComponent } from './components/admin/admin-events/admin-even
 import { MyRecipesComponent } from './components/my-recipes/my-recipes.component';
 import { MyReviewsComponent } from './components/my-reviews/my-reviews.component';
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -21,8 +22,9 @@ const routes: Routes = [
   { path: 'recipes', component: RecipesComponent },
   { path: 'events', component: EventsComponent },
   { path: 'my-recipes', component: MyRecipesComponent },
-  { path: 'my-reviews', component: MyReviewsComponent }, // <-- Add this line
-  { path: 'recipe-details/:id', component: RecipeDetailsComponent }, // <-- Add this line
+  { path: 'my-reviews', component: MyReviewsComponent },
+  { path: 'recipe-details/:id', component: RecipeDetailsComponent },
+  { path: 'cart', component: ShoppingCartComponent },
   { path: 'admin', component: AdminDashboardComponent },
   { path: 'admin/restaurants', component: AdminRestaurantsComponent },
   { path: 'admin/menu', component: AdminMenuComponent },

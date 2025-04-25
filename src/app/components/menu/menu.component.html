@@ -94,10 +94,11 @@
             <div class="menu-item-content">
               <h5 class="menu-item-title">{{item.nom}}</h5>
               <p class="menu-item-description">{{item.description}}</p>
+              <!-- Only showing the part that needs to be modified -->
               <div class="d-flex justify-content-between align-items-center mt-3">
                 <span class="price">${{item.prix}}</span>
                 <div>
-                  <button class="btn btn-sm btn-outline-primary me-2">
+                  <button class="btn btn-sm btn-outline-primary me-2" (click)="addToCart(item)">
                     <i class="bi bi-plus-lg"></i> Add to Cart
                   </button>
                   <button class="btn btn-sm btn-info text-white" (click)="showDetails(item)" data-bs-toggle="modal" data-bs-target="#menuDetailsModal">

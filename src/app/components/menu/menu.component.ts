@@ -4,6 +4,7 @@ import { Menu } from '../../models/menu.model';
 import { Restaurant } from '../../models/restaurant.model';
 import { MenuService } from '../../services/menu.service';
 import { RestaurantService } from '../../services/restaurant.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-menu',
@@ -16,11 +17,12 @@ export class MenuComponent implements OnInit {
   loading = false;
   errorMessage = '';
   restaurantId: number | null = null;
-  selectedMenu: Menu | null = null; // <-- Add this line
+  selectedMenu: Menu | null = null;
 
   constructor(
     private menuService: MenuService,
     private restaurantService: RestaurantService,
+    private cartService: CartService,
     private route: ActivatedRoute
   ) { }
 
@@ -85,5 +87,47 @@ export class MenuComponent implements OnInit {
 
   showDetails(menu: Menu): void {
     this.selectedMenu = menu;
+  }
+
+  // Add this method to the MenuComponent class
+  addToCart(menu: Menu): void {
+    // First try to add to backend
+    this.cartService.addMenuToCart(menu.id!, 1).subscribe({
+      next: (response) => {
+        alert(`${menu.nom} added to your cart!`);
+      },
+      error: (error) => {
+        console.error('Error adding to cart via API', error);
+        // Fallback to local storage if API fails
+        this.addToLocalCart(menu);
+      }
+    });
+  }
+
+  // Fallback method for local storage
+  private addToLocalCart(menu: Menu): void {
+    let cart: { item: Menu, quantity: number }[] = [];
+    const savedCart = localStorage.getItem('shoppingCart');
+    
+    if (savedCart) {
+      cart = JSON.parse(savedCart);
+      
+      // Check if item already exists in cart
+      const existingItemIndex = cart.findIndex(cartItem => cartItem.item.id === menu.id);
+      
+      if (existingItemIndex !== -1) {
+        // Increase quantity if item already in cart
+        cart[existingItemIndex].quantity += 1;
+      } else {
+        // Add new item to cart
+        cart.push({ item: menu, quantity: 1 });
+      }
+    } else {
+      // Create new cart with this item
+      cart = [{ item: menu, quantity: 1 }];
+    }
+    
+    localStorage.setItem('shoppingCart', JSON.stringify(cart));
+    alert(`${menu.nom} added to your cart! (local storage)`);
   }
 }

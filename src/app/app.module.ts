@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +25,7 @@ import { MyRecipesComponent } from './components/my-recipes/my-recipes.component
 import { EventService } from './services/event.service';
 import { RestaurantService } from './services/restaurant.service';
 import { MenuService } from './services/menu.service';
+import { CartService } from './services/cart.service';
 import { MyReviewsComponent } from './components/my-reviews/my-reviews.component';
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 
@@ -46,16 +48,17 @@ import { RecipeDetailsComponent } from './components/recipe-details/recipe-detai
     AdminEventsComponent,
     MyRecipesComponent,
     MyReviewsComponent,
-    RecipeDetailsComponent
+    RecipeDetailsComponent,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [EventService, RestaurantService, MenuService],
+  providers: [EventService, RestaurantService, MenuService, CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
